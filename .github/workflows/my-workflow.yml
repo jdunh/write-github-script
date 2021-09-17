@@ -11,11 +11,13 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
+            const fs = require("fs")
+            const issueBody = fs.readFileSync(".github/ISSUE_RESPONSE/comment.md", "utf8")
             github.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: "🎉 You've created this issue comment using GitHub Script!!!"
+              body: issueBody
             })
             github.projects.createCard({
               column_id: 16006059,
